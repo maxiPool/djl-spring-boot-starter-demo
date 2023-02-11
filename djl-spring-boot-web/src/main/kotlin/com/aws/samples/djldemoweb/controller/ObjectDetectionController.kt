@@ -38,7 +38,8 @@ class ObjectDetectionController(private val uploader: S3ImageUploader,
 
     @RequestMapping("/object-detection/inbox")
     fun listFiles(model: Model): String {
-        model.addAttribute("files", downloader.listFolder("inbox"))
+        var listFolder = downloader.listFolder("inbox")
+        model.addAttribute("files", listFolder)
         return "object-detection-files"
     }
 
@@ -68,12 +69,12 @@ class ObjectDetectionController(private val uploader: S3ImageUploader,
     @RequestMapping("/object-detection/images/inbox/{file-name}")
     @ResponseBody
     fun getInboxImage(@PathVariable("file-name") fileName: String) : Resource {
-        return InputStreamResource(downloader.downloadStream("inbox/".plus(fileName)))
+        return InputStreamResource(downloader.downloadStream("myBucket/inbox/".plus(fileName.replace(".png.png", ".png")), "inbox"))
     }
 
     @RequestMapping("/object-detection/images/outbox/{file-name}")
     @ResponseBody
     fun getOutboxImage(@PathVariable("file-name") fileName: String) : Resource {
-        return InputStreamResource(downloader.downloadStream("outbox/".plus(fileName)))
+        return InputStreamResource(downloader.downloadStream("myBucket/outbox/".plus(fileName.replace(".png.png", ".png")), "outbox"))
     }
 }

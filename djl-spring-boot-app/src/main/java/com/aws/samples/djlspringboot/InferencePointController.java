@@ -57,7 +57,7 @@ public class InferencePointController {
                                     @RequestParam(name = "generateOutputImage") Boolean generateOutputImage)
 			throws IOException, TranslateException {
 
-        Image image = imageFactory.fromInputStream(downloader.downloadStream(fileName));
+        Image image = imageFactory.fromInputStream(downloader.downloadStream(fileName, "inbox"));
         var inferredObjects = new LinkedList<InferredObject>();
 
         var outputReference = "";
@@ -66,7 +66,7 @@ public class InferencePointController {
             var detected = p.predict(image);
             if(generateOutputImage != null && generateOutputImage) {
                 RenderedImage newImage = createImage(detected, image);
-                outputReference = uploader.upload(newImage, fileName.concat(PNG));
+                outputReference = uploader.upload(newImage, fileName.concat(PNG).replace(".png.png", ".png"));
             }
             detected.items().forEach(e -> inferredObjects.add(new InferredObject(e.getClassName(), e.getProbability())));
             return new InferenceResponse(inferredObjects, outputReference);

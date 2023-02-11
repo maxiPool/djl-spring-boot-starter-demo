@@ -25,15 +25,18 @@
         <thead>
         <tr>
             <th align="left">Name</th>
-            <th align="left">Size</th>
-            <th align="left">Created</th>
+<!--            <th align="left">Size</th>-->
+<!--            <th align="left">Created</th>-->
         </tr>
         </thead>
         <tbody>
-        <tr th:each="sb : ${files.objectSummaries}" onclick="myFunction(this)" th:unless="${sb.size}==0">
-            <td id="key" th:text="${sb.key}">Object key in S3</td>
-            <td th:text="${sb.size}">File size</td>
-            <td th:text="${sb.lastModified}">Last modified</td>
+<!--        <tr th:each="sb : ${files.objectSummaries}" onclick="myFunction(this)" th:unless="${sb.size}==0">-->
+<!--            <td id="key" th:text="${sb.key}">Object key in S3</td>-->
+<!--            <td th:text="${sb.size}">File size</td>-->
+<!--            <td th:text="${sb.lastModified}">Last modified</td>-->
+<!--        </tr>-->
+        <tr th:each="sb : ${files.objectSummaries}" onclick="myFunction(this)">
+            <td id="key" th:text="${sb.fileName}">Object key in S3</td>
         </tr>
         </tbody>
     </table>
